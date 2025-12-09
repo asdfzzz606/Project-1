@@ -3,6 +3,8 @@
 #include <iostream>
 #include <numeric>
 #include <vector>
+#include <list>
+
 
 using namespace std;
 
