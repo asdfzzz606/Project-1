@@ -114,7 +114,7 @@ clean:
 #   should execute
 test: targets
 	@ for pgm in $(TARGETS) ; do \
-		result=$$($$pgm $(NUM_BLOCKS)) ;\
+		result=$$(./$$pgm $(NUM_BLOCKS)) ;\
 		$(PRINTF) "%-18s %s\n" "$$pgm:" "$$result" ;\
 	done
 
@@ -124,7 +124,7 @@ test: targets
 #   should execute
 breaks: targets
 	@ for pgm in $(TARGETS) ; do \
-		result=$$($(STRACE) $$pgm $(NUM_BLOCKS) 2>&1 $(GREP) brk | $(WC)) ;\
+		result=$$($(STRACE) ./$$pgm $(NUM_BLOCKS) 2>&1 $(GREP) brk | $(WC)) ;\
 		$(PRINTF) "%-18s %s\n" "$$pgm:" "$$result" ;\
 	done
 
@@ -138,7 +138,7 @@ trials: targets
 	for pgm in $(TARGETS) ; do \
 		$(PRINTF) "%s (list length = %d):\n" $$pgm $(NUM_BLOCKS) ;\
 		for t in {1..$(NUM_TRIALS)} ; do \
-			( $(TIME) $$pgm $(NUM_BLOCKS) > /dev/null ) 2>&1 | tee -a $(LOG) ;\
+			( $(TIME) ./$$pgm $(NUM_BLOCKS) > /dev/null ) 2>&1 | tee -a $(LOG) ;\
 		done ;\
 		cat $(LOG) | $(AWK) ;\
 		$(PRINTF) "\n" ;\
